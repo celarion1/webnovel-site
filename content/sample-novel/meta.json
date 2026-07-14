@@ -1,0 +1,71 @@
+{
+  "title": "캠퍼스 영어회화",
+  "description": "캠퍼스 러브스토리입니다.",
+  "createdAt": 1750000000000,
+  "episodes": [
+    {
+      "id": "ep-sample-001",
+      "title": "에피소드 1: 캠퍼스의 경계에서 (The Edge of Campus)"
+    },
+    {
+      "id": "ep-sample-002",
+      "title": "에피소드 2: 수요와 공급, 그리고 사랑의 법칙"
+    },
+    {
+      "id": "ep-mrkcpxeg-6q82o",
+      "title": "에피소드 3: 서울의 밤, 그리고 낯선 호흡"
+    },
+    {
+      "id": "ep-mrkcqr4j-30gak",
+      "title": "에피소드 4: 혀끝으로 기억하는 레시피 (Recipe Remembered by the Tip of the Tongue)"
+    },
+    {
+      "id": "ep-mrkcrfs7-20f1q",
+      "title": "에피소드 5: 길 위에서 찾은 우리만의 온도 (The Temperature We Found on the Road)"
+    },
+    {
+      "id": "ep-mrkcrznd-ktpjz",
+      "title": "에피소드 6: 화성에서 온 남자, 금성에서 온 여자, 그리고 지구에서의 우리 (Men from Mars, Women from Venus, and Us on Earth)"
+    },
+    {
+      "id": "ep-mrkd54mb-ev0g8",
+      "title": "에피소드 7: 36.5도의 안식처 (Sanctuary of 36.5°C)"
+    },
+    {
+      "id": "ep-mrkd5s9i-ucske",
+      "title": "에피소드 8: XOXO, 그리고 남겨진 질문들 (XOXO, and the Questions Left Behind)"
+    },
+    {
+      "id": "ep-mrkd6lds-s3dxo",
+      "title": "에피소드 9: 호주를 향해"
+    },
+    {
+      "id": "ep-mrkd70xx-pbucs",
+      "title": "[외전] 태양 아래, 금기(Taboo)를 넘어서 (Beyond the Taboo Under the Sun)"
+    },
+    {
+      "id": "ep-mrkd7n05-4b0iv",
+      "title": "에피소드 10: 돌아온 계절, 그리고 소문의 온도 (The Season of Return and the Temperature of Rumors)"
+    },
+    {
+      "id": "ep-mrkd8a6l-rx6wl",
+      "title": "에피소드 11: 불가능한 삼위일체, 그리고 가능한 사랑 (The Impossible Trinity, and Possible Love)"
+    },
+    {
+      "id": "ep-mrkd8ye3-yif8b",
+      "title": "에피소드 12: 서리 내린 유리창, 그리고 마지막 성소 (Frosted Glass, and the Last Sanctuary)"
+    },
+    {
+      "id": "ep-mrkd9krk-qnijn",
+      "title": "에피소드 13: 핏빛 금요일, 부러진 약속의 반지 (Bloody Friday, and the Fractured Ring of Promise)"
+    },
+    {
+      "id": "ep-mrkda9zw-el9b8",
+      "title": "에피소드 14: 부러진 약속, 잘려나간 금속의 비명 (The Broken Promise, and the Scream of Severed Metal)"
+    },
+    {
+      "id": "ep-mrkdaxc3-b7tg4",
+      "title": "에피소드 15: 부서진 조각들의 귀향 (The Homecoming of Broken Pieces)"
+    }
+  ]
+}
