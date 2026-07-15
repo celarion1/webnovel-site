@@ -30,6 +30,12 @@ export default function Sidebar() {
 
   const [reorderingId, setReorderingId] = useState(null);
 
+  // 통계
+  const [showStats, setShowStats] = useState(false);
+  const [statsData, setStatsData] = useState(null);
+  const [statsLoading, setStatsLoading] = useState(false);
+  const [statsError, setStatsError] = useState("");
+
   // 소설 수정
   const [editingNovelSlug, setEditingNovelSlug] = useState(null);
   const [editNovelTitle, setEditNovelTitle] = useState("");
@@ -207,6 +213,31 @@ export default function Sidebar() {
       router.refresh();
     } catch {
       alert("삭제 중 오류가 발생했습니다.");
+    }
+  }
+
+  // ---------- 통계 ----------
+
+  async function toggleStats() {
+    if (showStats) {
+      setShowStats(false);
+      return;
+    }
+    setShowStats(true);
+    setStatsLoading(true);
+    setStatsError("");
+    try {
+      const res = await fetch("/api/admin/stats", { cache: "no-store" });
+      const data = await res.json();
+      if (!res.ok) {
+        setStatsError(data.error || "통계를 불러오지 못했습니다.");
+        return;
+      }
+      setStatsData(data);
+    } catch {
+      setStatsError("통계를 불러오는 중 오류가 발생했습니다.");
+    } finally {
+      setStatsLoading(false);
     }
   }
 
@@ -409,6 +440,73 @@ export default function Sidebar() {
           </button>
         )}
       </div>
+
+      {isAdmin && (
+        <div className="stats-panel-wrap">
+          <button type="button" className="btn-text" onClick={toggleStats}>
+            {showStats ? "통계 닫기" : "📊 통계 보기"}
+          </button>
+
+          {showStats && (
+            <div className="stats-panel">
+              {statsLoading && <p className="empty-hint">불러오는 중...</p>}
+              {statsError && <p className="error-text">{statsError}</p>}
+
+              {statsData && (
+                <>
+                  <p className="stats-summary">
+                    최근 30일 조회수 {statsData.totals.totalPageviews.toLocaleString()}회 · 회차
+                    누적 조회수 {statsData.totals.totalEpisodeViews.toLocaleString()}회
+                  </p>
+
+                  <p className="stats-subtitle">일별 방문 현황 (최근 30일)</p>
+                  {statsData.daily.length === 0 ? (
+                    <p className="empty-hint">아직 기록된 방문이 없습니다.</p>
+                  ) : (
+                    <table className="stats-table">
+                      <thead>
+                        <tr>
+                          <th>날짜</th>
+                          <th>조회수</th>
+                          <th>순방문자</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {statsData.daily.map((d) => (
+                          <tr key={d.date}>
+                            <td>{d.date}</td>
+                            <td>{d.pageviews}</td>
+                            <td>{d.uniqueVisitors}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  )}
+
+                  <p className="stats-subtitle">회차별 조회수 TOP 10</p>
+                  {statsData.episodes.length === 0 ? (
+                    <p className="empty-hint">아직 조회된 회차가 없습니다.</p>
+                  ) : (
+                    <ul className="stats-episode-list">
+                      {statsData.episodes.slice(0, 10).map((e) => (
+                        <li key={`${e.novelSlug}-${e.episodeId}`}>
+                          <span
+                            className="stats-episode-title"
+                            title={`${e.novelTitle} - ${e.episodeTitle}`}
+                          >
+                            {e.novelTitle} · {e.episodeTitle}
+                          </span>
+                          <span className="stats-episode-count">{e.views}회</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </>
+              )}
+            </div>
+          )}
+        </div>
+      )}
 
       {isAdmin && (
         <>

@@ -1,5 +1,6 @@
 import "./globals.css";
 import Sidebar from "../components/Sidebar";
+import PageTracker from "../components/PageTracker";
 
 export const metadata = {
   title: "내 웹소설 서재",
@@ -10,6 +11,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="ko">
       <body>
+        <PageTracker />
         <header className="site-header">
           <div className="sky">
             <span className="cloud cloud-1" />

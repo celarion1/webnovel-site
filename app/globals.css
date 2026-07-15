@@ -614,3 +614,94 @@ button {
   padding: 3px 8px;
   border-radius: 999px;
 }
+
+/* ---------- 통계 패널 ---------- */
+
+.stats-panel-wrap {
+  margin-bottom: 16px;
+}
+
+.stats-panel {
+  margin-top: 10px;
+  background: #fff;
+  border: 1px solid #e9e4d8;
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.stats-summary {
+  font-size: 12px;
+  font-weight: 700;
+  color: #2c2a24;
+  margin: 0 0 10px;
+  line-height: 1.5;
+}
+
+.stats-subtitle {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #8a7c5c;
+  margin: 12px 0 6px;
+}
+
+.stats-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11.5px;
+  max-height: 200px;
+  display: block;
+  overflow-y: auto;
+}
+
+.stats-table thead,
+.stats-table tbody {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+.stats-table th {
+  text-align: left;
+  color: #a9a08a;
+  font-weight: 600;
+  padding: 4px 4px;
+  border-bottom: 1px solid #ece8e0;
+}
+
+.stats-table td {
+  padding: 4px 4px;
+  color: #444;
+  border-bottom: 1px solid #f2efe6;
+}
+
+.stats-episode-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.stats-episode-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 0;
+  border-bottom: 1px solid #f2efe6;
+}
+
+.stats-episode-title {
+  flex: 1;
+  min-width: 0;
+  font-size: 11.5px;
+  color: #444;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.stats-episode-count {
+  flex-shrink: 0;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #4a9fd8;
+}
