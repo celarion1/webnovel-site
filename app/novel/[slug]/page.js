@@ -12,7 +12,10 @@ export default async function NovelPage({ params }) {
       <p className="breadcrumb">
         <a href="/">서재</a> / {novel.title}
       </p>
-      <h1 className="page-title">{novel.title}</h1>
+      <h1 className="page-title">
+        {novel.title}
+        {novel.completed && <span className="status-badge status-badge-completed">완결</span>}
+      </h1>
       {novel.description && <p className="page-desc">{novel.description}</p>}
 
       {novel.episodes.length === 0 ? (

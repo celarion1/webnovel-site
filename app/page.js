@@ -21,11 +21,16 @@ export default async function HomePage() {
           {novels.map((novel) => (
             <li key={novel.slug}>
               <a className="novel-card" href={`/novel/${novel.slug}`}>
-                <p className="novel-card-title">{novel.title}</p>
+                <p className="novel-card-title">
+                  {novel.title}
+                  {novel.completed && <span className="status-badge status-badge-completed">완결</span>}
+                </p>
                 {novel.description && (
                   <p className="novel-card-desc">{novel.description}</p>
                 )}
-                <p className="novel-card-meta">전체 {novel.episodes.length}화</p>
+                <p className="novel-card-meta">
+                  {novel.completed ? "완결" : `전체 ${novel.episodes.length}화`}
+                </p>
               </a>
             </li>
           ))}

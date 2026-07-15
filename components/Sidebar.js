@@ -10,6 +10,8 @@ export default function Sidebar() {
   const [loaded, setLoaded] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
 
+  const [announcements, setAnnouncements] = useState([]);
+
   const [loginOpen, setLoginOpen] = useState(false);
   const [loginPassword, setLoginPassword] = useState("");
   const [loginError, setLoginError] = useState("");
@@ -54,8 +56,25 @@ export default function Sidebar() {
   useEffect(() => {
     fetchNovels();
     fetchAdminStatus();
+    fetchAnnouncements();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  async function fetchAnnouncements() {
+    try {
+      const res = await fetch("/api/announcements", { cache: "no-store" });
+      const data = await res.json();
+      if (res.ok) setAnnouncements(data.announcements || []);
+    } catch {
+      // 조용히 무시 (공지사항만 못 불러옴)
+    }
+  }
+
+  function formatMonthDay(dateStr) {
+    const parts = (dateStr || "").split("-");
+    if (parts.length !== 3) return dateStr;
+    return `${parts[1]}/${parts[2]}`;
+  }
 
   async function fetchAdminStatus() {
     try {
@@ -216,6 +235,27 @@ export default function Sidebar() {
     }
   }
 
+  // ---------- 완결 토글 ----------
+
+  async function handleToggleComplete(novel) {
+    try {
+      const res = await fetch(`/api/novels/${novel.slug}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ completed: !novel.completed }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        alert(data.error || "변경에 실패했습니다.");
+        return;
+      }
+      await fetchNovels();
+      router.refresh();
+    } catch {
+      alert("변경 중 오류가 발생했습니다.");
+    }
+  }
+
   // ---------- 통계 ----------
 
   async function toggleStats() {
@@ -294,6 +334,7 @@ export default function Sidebar() {
       setEpisodeTitle("");
       setEpisodeBody("");
       await fetchNovels();
+      fetchAnnouncements();
       router.push(`/novel/${slug}/${data.id}`);
     } catch {
       setEpisodeError("등록 중 오류가 발생했습니다.");
@@ -400,6 +441,21 @@ export default function Sidebar() {
 
   return (
     <aside className="sidebar">
+      {announcements.length > 0 && (
+        <div className="announcements-panel">
+          <p className="sidebar-section-title" style={{ marginBottom: 8 }}>
+            📢 공지사항
+          </p>
+          <ul className="announcements-list">
+            {announcements.map((a) => (
+              <li key={`${a.date}-${a.novelSlug}`}>
+                {formatMonthDay(a.date)}, {a.novelTitle}: {a.count}개의 에피소드 새로 등록
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
       <div className="admin-status-row">
         {isAdmin ? (
           <>
@@ -606,9 +662,21 @@ export default function Sidebar() {
                   {novel.title}
                 </span>
                 <span className="novel-item-actions">
-                  <span className="novel-item-count">{novel.episodes.length}화</span>
+                  {novel.completed ? (
+                    <span className="novel-item-count novel-item-completed">완결</span>
+                  ) : (
+                    <span className="novel-item-count">{novel.episodes.length}화</span>
+                  )}
                   {isAdmin && (
                     <>
+                      <button
+                        type="button"
+                        className="icon-btn"
+                        title={novel.completed ? "완결 해제" : "완결로 표시"}
+                        onClick={() => handleToggleComplete(novel)}
+                      >
+                        {novel.completed ? "↺" : "🏁"}
+                      </button>
                       <button
                         type="button"
                         className="icon-btn"
