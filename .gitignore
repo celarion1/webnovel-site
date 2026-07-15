@@ -7,3 +7,4 @@ node_modules
 .env*.local
 content/analytics.json
 content/announcements.json
+content/comments.json

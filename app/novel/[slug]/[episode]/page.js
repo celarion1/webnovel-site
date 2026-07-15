@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { getEpisode } from "../../../../lib/novels";
+import CommentSection from "../../../../components/CommentSection";
 
 export const dynamic = "force-dynamic";
 
@@ -32,6 +33,8 @@ export default async function EpisodePage({ params }) {
           <span>다음화 →</span>
         )}
       </div>
+
+      <CommentSection novelSlug={params.slug} episodeId={params.episode} />
     </div>
   );
 }
