@@ -439,8 +439,27 @@ export default function Sidebar() {
     }
   }
 
+  const telegramUrl = process.env.NEXT_PUBLIC_TELEGRAM_CHANNEL_URL;
+
   return (
     <aside className="sidebar">
+      {telegramUrl && (
+        <div className="notify-panel">
+          <p className="sidebar-section-title" style={{ marginBottom: 6 }}>
+            🔔 새 글 알림 받기
+          </p>
+          <p className="notify-desc">새 소설·회차가 올라오면 텔레그램으로 알려드려요.</p>
+          <a
+            className="btn-primary notify-btn"
+            href={telegramUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            텔레그램으로 알림 받기
+          </a>
+        </div>
+      )}
+
       {announcements.length > 0 && (
         <div className="announcements-panel">
           <p className="sidebar-section-title" style={{ marginBottom: 8 }}>

@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
-import { createEpisode, friendlyFsError } from "../../../../../lib/novels";
+import { createEpisode, getNovel, friendlyFsError } from "../../../../../lib/novels";
 import { isAdminAuthed } from "../../../../../lib/auth";
 import { recordEpisodeAdded } from "../../../../../lib/announcements";
+import { notifyNewEpisode } from "../../../../../lib/telegram";
 
 export const dynamic = "force-dynamic";
 
@@ -22,6 +23,17 @@ export async function POST(req, { params }) {
       await recordEpisodeAdded(params.slug);
     } catch {
       // 공지 기록 실패가 회차 등록 자체를 막지 않도록 무시
+    }
+    try {
+      const novel = await getNovel(params.slug);
+      await notifyNewEpisode({
+        novelSlug: params.slug,
+        novelTitle: novel ? novel.title : params.slug,
+        episodeId: id,
+        episodeTitle: title.trim(),
+      });
+    } catch {
+      // 텔레그램 알림 실패가 회차 등록 자체를 막지 않도록 무시
     }
     return NextResponse.json({ id });
   } catch (err) {
